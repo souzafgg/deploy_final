@@ -20,7 +20,7 @@ st.set_page_config(page_title="DASHBOARD NLT",
 
 # ---------------- login -------------------
 
-file = ler_arquivo(nome_df="mostrar_pai.csv")
+file = ler_arquivo(nome_df="nltdevs.csv")
 
 
 update_mode_value = GridUpdateMode.__members__["GRID_CHANGED"]
