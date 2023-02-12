@@ -139,8 +139,8 @@ if pagina == "Dashboards":
 
     st.header("Métricas gerais da análise")
     cm1, cm2, cm3, cm4, cm5 = st.columns(5)
-    with open("metrics.css") as estilo:
-        st.markdown(f"<style>{estilo.read()}</style>", unsafe_allow_html=True)
+    # with open("metrics.css") as estilo:
+    #     st.markdown(f"<style>{estilo.read()}</style>", unsafe_allow_html=True)
         
     cm1.metric(label="Total", value=geral.loc["Total"])
     cm2.metric(label="Na NLT", value=status.loc["Na NLT"])
