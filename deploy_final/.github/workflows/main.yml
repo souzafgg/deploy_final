@@ -1,0 +1,40 @@
+name: CI-CD
+
+on:
+  push:
+    branches: ["master"]
+    
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: checkout source code
+        uses: actions/checkout@v3.3.0
+        
+      - name: docker-creds
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+        
+      - name: building and pushing docker image
+        uses: docker/build-push-action@v4.0.0
+        env:
+          tagVersion: "${{ github.run_number }}"
+        with:
+          file: Dockerfile
+          push: true
+          tags: szadhub/spiritsec:${{ env.tagVersion }}
+  CD:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3.3.0
+      
+      - name: deployment      
+        uses: Azure/webapps-deploy@v2.2.6
+        with:
+          app-name: spiritsecconverter
+          publish-profile: ${{ secrets.WEBAPP }}
+          images: szadhub/spiritsec:${{ github.run_number }}
